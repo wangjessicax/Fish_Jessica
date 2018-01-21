@@ -90,7 +90,7 @@ class FishDerbySolver():
 
 		if matmul1<self.lowMatmul:
 			self.lowMatmul=matmul1
-		action=np.rint(np.matmul(observation,params))-1000000
+		action=np.rint(np.matmul(observation,params))-749411.0
 		
 		max=(1857407.0-749411.0)/18 #max with everything is set to 255 is 8323200.0
 		
@@ -99,7 +99,8 @@ class FishDerbySolver():
 			if (action>(i*max)) and (action<((i+1)*max)):
 				action = i
 				break
-		else: action =0
+		else: 
+			action =0
 			print("MATMUL OUT OF RANGE"+matmul1)
 		return action
 		
