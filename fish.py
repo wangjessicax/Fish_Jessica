@@ -40,7 +40,7 @@ class FishDerbySolver():
 	# Solver initialization
 	def __init__(self, monitor=False):
 		# Make the gym environment
-		self.env = gym.make('FishingDerby-v0')
+		self.env = gym.make('FishingDerby-ram-v0')
 		self.env.reset()
 		'''
 		for _ in range(1000):
@@ -129,7 +129,7 @@ class FishDerbySolver():
 				score += reward    #reward is difference between old score and new score
 
 			if done: # The episode has ended
-				print(score)
+				print("hey my man!")
 				break
 				
 				

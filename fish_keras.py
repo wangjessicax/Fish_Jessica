@@ -77,9 +77,8 @@ if __name__ == "__main__":
         state = env.reset()
         print(state.shape)
         state = np.reshape(state, [480, state_size])
-        for time in range(500):
+        for time in range(10000):
             # env.render()
-            print("test %s" %time)
             action = agent.act(state)
             next_state, reward, done, _ = env.step(action)
             reward = reward if not done else -10
@@ -88,7 +87,7 @@ if __name__ == "__main__":
             state = next_state
             if done:
                 print("episode: {}/{}, score: {}, e: {:.2}"
-                      .format(e, EPISODES, time, agent.epsilon))
+                      .format(e, EPISODES, reward, agent.epsilon))
                 break
         if len(agent.memory) > batch_size:
             agent.replay(batch_size)
