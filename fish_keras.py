@@ -75,7 +75,6 @@ if __name__ == "__main__":
 
     for e in range(EPISODES):
         state = env.reset()
-        env = gym.wrappers.Monitor(env, './fishing-derby-keras', force=True)
         print(state.shape)
         state = np.reshape(state, [480, state_size])
         for time in range(500):
