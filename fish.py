@@ -24,6 +24,8 @@ NOTES
 MAX MATMUL AFTER 500 EPISODES 1857407.0
 MIN MATMUL AFTER 500 EPISODES 749411.0
 
+Box(210, 160, 3)
+
 '''
 import gym
 import numpy as np
@@ -38,7 +40,7 @@ class FishDerbySolver():
 	# Solver initialization
 	def __init__(self, monitor=False):
 		# Make the gym environment
-		self.env = gym.make('FishingDerby-ram-v0')
+		self.env = gym.make('FishingDerby-v0')
 		self.env.reset()
 		'''
 		for _ in range(1000):

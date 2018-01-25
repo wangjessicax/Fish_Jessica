@@ -20,7 +20,7 @@ from torch.autograd import Variable
 import torchvision.transforms as T
 import tensorflow as tf
 
-env = gym.make('FishingDerby-ram-v0')
+env = gym.make('FishingDerby-v0')
 
 
 #GRADIENT DESCENT NUMPY
@@ -81,11 +81,11 @@ class DQN(nn.Module):
     def __init__(self, monitor=False):
 
         super(DQN, self).__init__()
-        self.conv1 = nn.Conv2d(3, 16, kernel_size=5, stride=2)
-        self.bn1 = nn.BatchNorm2d(16)
-        self.conv2 = nn.Conv2d(16, 32, kernel_size=5, stride=2)
+        self.conv1 = nn.Conv2d(210, 210, kernel_size=5, stride=2)
+        self.bn1 = nn.BatchNorm2d(210)
+        self.conv2 = nn.Conv2d(210, 32, kernel_size=5, stride=2)
         self.bn2 = nn.BatchNorm2d(32)
-        self.conv3 = nn.Conv2d(32, 32, kernel_size=5, stride=2)
+        self.conv3 = nn.Conv2d(210, 32, kernel_size=5, stride=2)
         self.bn3 = nn.BatchNorm2d(32)
         self.head = nn.Linear(448, 2)
 
@@ -156,9 +156,10 @@ def select_action(observation):
     eps_threshold = EPS_END + (EPS_START - EPS_END) * \
         math.exp(-1. * steps_done / EPS_DECAY)
     if sample > eps_threshold:
-        print("this is the return"+model(Variable(observation, volatile=True).type(FloatTensor)).data.max(1)[1].view(1, 1))
+
+    
         return model(
-            Variable(observation, volatile=True).type(FloatTensor)).data.max(1)[1].view(1, 1)
+            Variable(observation, volatile=True)).data.max(1)[1].view(1, 1)
     else:
         return random.randrange(18)
 episode_durations = []
@@ -258,6 +259,9 @@ for i_episode in range(num_episodes):
         # Select and perform an action
         action = select_action(observation)
         observation, reward, done, info = env.step(action)
+        observation=torch.FloatTensor(observation)
+        observation = observation.unsqueeze(0)
+        print(observation)
        
         if (reward>0):
             score += reward    #reward is difference between old score and new score
