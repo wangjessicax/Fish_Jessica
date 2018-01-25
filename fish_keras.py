@@ -10,17 +10,19 @@ from keras.optimizers import Adam
 EPISODES = 10000
 
 
+
 class DQNAgent:
     def __init__(self, state_size, action_size):
         self.state_size = state_size
         self.action_size = action_size
-        self.memory = deque(maxlen=2000)
+        self.memory = deque(maxlen=200)
         self.gamma = 0.95    # discount rate
         self.epsilon = 1.0  # exploration rate
         self.epsilon_min = 0.01
         self.epsilon_decay = 0.995
         self.learning_rate = 0.001
         self.model = self._build_model()
+
 
     def _build_model(self):
         # Neural Net for Deep-Q learning Model
@@ -72,8 +74,9 @@ if __name__ == "__main__":
     done = False
     batch_size = 32
 
-
+    fh = open("hello.txt","w")
     for e in range(EPISODES):
+        score=0
         state = env.reset()
         print(state.shape)
         state = np.reshape(state, [480, state_size])
@@ -82,14 +85,19 @@ if __name__ == "__main__":
             action = agent.act(state)
             next_state, reward, done, _ = env.step(action)
             reward = reward if not done else -10
+            score+=reward
             next_state = np.reshape(next_state, [480, state_size])
             agent.remember(state, action, reward, next_state, done)
             state = next_state
             if done:
                 print("episode: {}/{}, score: {}, e: {:.2}"
-                      .format(e, EPISODES, reward, agent.epsilon))
+                      .format(e, EPISODES, score, agent.epsilon))
                 break
+        
         if len(agent.memory) > batch_size:
             agent.replay(batch_size)
         if e % 10 == 0:
             agent.save("./save/cartpole-dqn.h5")
+            fh.write("episode: {}/{}, score: {}, e: {:.2} \n"
+                      .format(e, EPISODES, score, agent.epsilon))
+    fh.close()
