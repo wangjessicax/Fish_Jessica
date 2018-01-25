@@ -79,6 +79,7 @@ if __name__ == "__main__":
         state = np.reshape(state, [480, state_size])
         for time in range(500):
             # env.render()
+            print("test %s" %time)
             action = agent.act(state)
             next_state, reward, done, _ = env.step(action)
             reward = reward if not done else -10
