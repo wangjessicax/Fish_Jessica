@@ -7,7 +7,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.optimizers import Adam
 
-EPISODES = 1000
+EPISODES = 10000
 
 
 class DQNAgent:
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     print (state_size)
     action_size = env.action_space.n
     agent = DQNAgent(state_size, action_size)
-    # agent.load("./save/cartpole-dqn.h5")
+    agent.load("./save/cartpole-dqn.h5")
 
     done = False
     batch_size = 32
