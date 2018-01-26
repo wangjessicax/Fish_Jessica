@@ -125,11 +125,10 @@ class FishDerbySolver():
 			action = self.choose_action(observation, params) #inputting the rest function and the random number, getting back left or right
 			observation, reward, done, info = self.env.step(action)  #step(self, action): Step the environment by one timestep. Returns observation, reward, done, info.
 			#print(reward)
-			if (reward>0):
-				score += reward    #reward is difference between old score and new score
+			
+			score += reward    #reward is difference between old score and new score
 
 			if done: # The episode has ended
-				print("hey my man!")
 				break
 				
 				
